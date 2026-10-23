@@ -1,0 +1,98 @@
+<!DOCTYPE html>
+<html lang="zh-Hant">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>考試大鐘</title>
+<link rel="icon" href="favicon.ico" type="image/x-icon">
+<link rel="stylesheet" href="style.css">
+</head>
+<body>
+<nav class="tabs" role="tablist">
+  <button type="button" role="tab" data-tab="exam" aria-selected="true">考試大鐘</button>
+  <button type="button" role="tab" data-tab="bell" aria-selected="false">上下課鐘</button>
+  <button type="button" role="tab" data-tab="pomo" aria-selected="false">讀書番茄鐘</button>
+</nav>
+
+<!-- 考試大鐘 -->
+<section class="panel on" id="p-exam">
+  <div class="date" id="date"></div>
+  <div id="clockHolder"><div class="clock" id="clock">00:00:00</div></div>
+  <div class="remain" id="remain"></div>
+  <div class="subject" id="iSubject"></div>
+  <div class="meta" id="iMeta"></div>
+  <div class="counts">
+    <div><small>應到</small><b id="cExp">—</b></div>
+    <div><small>實到</small><b id="cAct">—</b></div>
+    <div class="abs"><small>缺考</small><b id="cAbs">—</b></div>
+  </div>
+  <button class="btn" id="fsBtn" type="button">全螢幕</button>
+
+  <div class="card editor">
+    <h3>考試資料（自動儲存在這台電腦）</h3>
+    <div class="grid">
+      <label>考試科目<input type="text" id="subject" placeholder="例如：數學"></label>
+      <label>監考老師<input type="text" id="teacher" placeholder="例如：王老師"></label>
+      <label>開始時間（24 小時制）<input type="text" id="start" data-time maxlength="5" placeholder="09:00"></label>
+      <label>結束時間（24 小時制）<input type="text" id="end" data-time maxlength="5" placeholder="10:40"></label>
+      <label>應到人數<input type="number" id="expected" min="0" step="1"></label>
+      <label>實到人數<input type="number" id="actual" min="0" step="1"></label>
+    </div>
+    <p class="small" id="exWarn">時間可輸入 0900、9:00 或 9，離開欄位時會自動整理成 24 小時制。</p>
+  </div>
+</section>
+
+<!-- 上下課鐘 -->
+<section class="panel" id="p-bell">
+  <div class="bigbtns">
+    <button type="button" id="ringStart">🔔 上課鈴</button>
+    <button type="button" id="ringEnd">🔔 下課鈴</button>
+  </div>
+  <div id="flash" role="status"></div>
+  <div id="next"></div>
+  <div class="card">
+    <h3>自動打鐘</h3>
+    <label class="sw"><input type="checkbox" id="auto">啟用自動打鐘（時間到自動響鈴）</label>
+    <p class="small">請保持此網頁開啟。<span id="audioSt"></span></p>
+  </div>
+  <div class="card">
+    <h3>課表</h3>
+    <div class="addrow">
+      <label>名稱（可不填）<input type="text" id="bName" placeholder="第一節"></label>
+      <label>上課時間<input type="text" id="bStart" data-time maxlength="5" placeholder="08:10"></label>
+      <label>下課時間<input type="text" id="bEnd" data-time maxlength="5" placeholder="09:00"></label>
+      <button class="btn" type="button" id="bAdd">新增</button>
+    </div>
+    <p class="small" id="bErr"></p>
+    <ul class="list" id="bList"></ul>
+  </div>
+</section>
+
+<!-- 讀書番茄鐘 -->
+<section class="panel" id="p-pomo" data-phase="focus">
+  <div class="pphase" id="pPhase">專注中</div>
+  <div class="ptime" id="pTime">25:00</div>
+  <div class="pround" id="pRound">第 1 輪</div>
+  <div class="pbtns">
+    <button class="btn" type="button" id="pStart">開始</button>
+    <button class="btn" type="button" id="pPause">暫停</button>
+    <button class="btn" type="button" id="pReset">重設</button>
+    <button class="btn" type="button" id="pSkip">跳過</button>
+  </div>
+  <div class="card">
+    <h3>時間設定（分鐘）</h3>
+    <div class="grid">
+      <label>專注<input type="number" id="pFocus" min="1" max="180" step="1"></label>
+      <label>休息<input type="number" id="pBreak" min="1" max="60" step="1"></label>
+    </div>
+    <p class="small">專注與休息結束時會響鈴並自動切換。</p>
+  </div>
+</section>
+
+<!-- 先從 CDN 載入 p5.js；若失敗，改用同資料夾的 p5.min.js -->
+<script src="https://cdnjs.cloudflare.com/ajax/libs/p5.js/1.11.1/p5.min.js"></script>
+<script>window.p5||document.write('<script src="p5.min.js"><\/script>')</script>
+<script src="app.js"></script>
+<script src="sketch.js"></script>
+</body>
+</html>
